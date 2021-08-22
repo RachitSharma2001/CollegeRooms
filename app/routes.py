@@ -1,6 +1,7 @@
 from flask import render_template
-from app import app
+from app import app, db
 from app.forms import LoginForm, SignupForm
+from app.models import Users
 
 @app.route('/')
 @app.route('/login', methods=["GET", "POST"])
@@ -12,7 +13,18 @@ def login():
 def signup():
     signup = SignupForm()
     if signup.validate_on_submit():
-        return "Validated"
+        # Get specific data
+        name = signup.data['name']
+        major = signup.data['major']
+        hall = signup.data['hall']
+        password = signup.data['password']
+
+        user = Users(name=name, major=major, hall=hall, password=password)
+        db.session.add(user)
+        db.session.commit()
+        
+        return login()
+
     return render_template("signup.html", form=signup)
 
 @app.route('/suggestions')
