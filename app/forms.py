@@ -4,7 +4,7 @@ from wtforms.validators import DataRequired
 
 class SignupForm(FlaskForm):
     name = StringField("Enter name", [DataRequired()])
-    major = StringField("Enter Major", [DataRequired()])
+    major = StringField("Enter major", [DataRequired()])
     # Make this a dropdown of all halls
     hall = StringField("Enter hall", [DataRequired()])
     password = PasswordField("Password", [DataRequired()])
