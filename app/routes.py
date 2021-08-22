@@ -11,6 +11,8 @@ def login():
 @app.route('/signup', methods=["GET", "POST"])
 def signup():
     signup = SignupForm()
+    if signup.validate_on_submit():
+        return "Validated"
     return render_template("signup.html", form=signup)
 
 @app.route('/suggestions')
