@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <!-- Reminder: percentage is used for expressions of logic, while brace is used for substituting in variables -->
+    <form action="" method="POST"  novalidate> 
+        {{ form.hidden_tag() }}
+        <div> 
+            {{ form.name.label }}
+            {{ form.name(size=32) }}
+        </div>
+        <div> 
+            {{ form.password.label }}
+            {{ form.password(size=32) }}
+        </div>
+        <div> {{ form.login() }} </div>
+    </form>
+{% endblock %}
+
