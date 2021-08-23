@@ -1,0 +1,2 @@
+1. If you remove or add a column to the table, you will get an error. Here is how to fix:
+    https://www.youtube.com/watch?v=wpRVZFwsD70
