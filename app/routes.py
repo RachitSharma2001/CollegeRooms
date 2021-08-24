@@ -56,6 +56,8 @@ def signup():
 @app.route('/logout')
 @login_required
 def logout():
+    if not current_user.is_authenticated:
+        return redirect(url_for("login"))
     # Add something to only show if user logs in
     logout_user()
     return render_template("logout.html")
@@ -63,14 +65,23 @@ def logout():
 @app.route('/suggestions')
 @login_required
 def suggestions():
+    if not current_user.is_authenticated:
+        return redirect(url_for("login"))
+    
     return "Suggestions"
 
 @app.route('/pending_invites')
 @login_required
 def pending_invites():
+    if not current_user.is_authenticated:
+        return redirect(url_for("login"))
+    
     return "Invites"
 
 @app.route('/message_room')
 @login_required
 def message():
+    if not current_user.is_authenticated:
+        return redirect(url_for("login"))
+    
     return render_template("room.html")
