@@ -1,38 +1,39 @@
-from flask import render_template, redirect, flash, url_for
-from flask_login import current_user, login_user, logout_user
+from flask import render_template, redirect, request, flash, url_for
+from flask_login import current_user, login_user, login_required, logout_user
 from app import app, db
 from app.forms import LoginForm, SignupForm
 from app.models import Users
+from werkzeug.urls import url_parse
 
 @app.route('/')
 @app.route('/login', methods=["GET", "POST"])
 def login():
+    # if the user is already logged in, redirect
+    if current_user.is_authenticated:
+        return redirect(url_for("message"))
+        
     login_form = LoginForm()
     if login_form.validate_on_submit():
-        # if the user is already logged in, redirect
-        if current_user.is_authenticated:
-            return redirect(url_for("message"))
-        
         user = Users.query.filter_by(name=login_form.data['name']).first()
         if user is None or not user.check_password(login_form.data['password']):
-            print("Incorrect password: ", login_form.data['password'])
-            print("User: ", user)
-            print("Check password: ", user.check_password(login_form.data['password']))
-            print("Check password hi: ", user.check_password("hi"))
             return redirect(url_for("login"))
         
         login_user(user)
-        return redirect(url_for("message"))
+        
+        next_page = request.args.get('next')
+        # second argument needed for security purposes
+        if not next_page or url_parse(next_page) != '':
+            return redirect(url_for("message"))
+        
+        return redirect(next_page)
 
     return render_template("login.html", form=login_form)
 
-@app.route('/logout')
-def logout():
-    logout_user()
-    return redirect(url_for("login"))
-
 @app.route('/signup', methods=["GET", "POST"])
 def signup():
+    if current_user.is_authenticated:
+        return redirect(url_for("message"))
+    
     signup = SignupForm()
     if signup.validate_on_submit():
         # Get specific data
@@ -51,14 +52,25 @@ def signup():
 
     return render_template("signup.html", form=signup)
 
+
+@app.route('/logout')
+@login_required
+def logout():
+    # Add something to only show if user logs in
+    logout_user()
+    return render_template("logout.html")
+
 @app.route('/suggestions')
+@login_required
 def suggestions():
     return "Suggestions"
 
 @app.route('/pending_invites')
+@login_required
 def pending_invites():
     return "Invites"
 
 @app.route('/message_room')
+@login_required
 def message():
-    return "Message room"
+    return render_template("room.html")
