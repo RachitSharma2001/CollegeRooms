@@ -10,8 +10,7 @@ class Users(UserMixin, db.Model):
     major = db.Column(db.String(100))
     hall = db.Column(db.String(100))
     password = db.Column(db.String(100))
-    messages_received = db.relationship('Message', lazy='dynamic', foreign_keys='Message.user_to_id')
-    messages_sent = db.relationship('Message', lazy='dynamic', foreign_keys='Message.user_from_id')
+    messages = db.relationship('Message', lazy='dynamic', primaryjoin="or_(Users.id == Message.user_to_id, Users.id == Message.user_from_id)")
 
     def set_password(self, password):
         self.password = generate_password_hash(password)
@@ -31,10 +30,8 @@ class Message(db.Model):
     content = db.Column(db.String(MAX_CHARS_IN_MESSAGE))
     
     def __repr__(self):
-        return 'Message from {}, to {}, with content {}'.format(self.name)
+        return 'Given_Message from {} to {}, with content: {}'.format(self.user_from_id, self.user_to_id, self.content)
     
-    #def __lt__(self):
-        
 @login.user_loader
 def load_user(id):
     return Users.query.get(int(id))

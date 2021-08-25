@@ -1,2 +1,6 @@
 1. If you remove or add a column to the table, you will get an error. Here is how to fix:
     https://www.youtube.com/watch?v=wpRVZFwsD70
+
+2. How we would access all the messages:
+    a. for m in User.query.get(user id).messages:
+        print(m.content Users.query.get(m.user_to_id).name, Users.query.get(m.user_from_id).name)
