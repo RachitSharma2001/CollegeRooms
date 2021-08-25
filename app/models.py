@@ -32,6 +32,13 @@ class Message(db.Model):
     def __repr__(self):
         return 'Given_Message from {} to {}, with content: {}'.format(self.user_from_id, self.user_to_id, self.content)
     
+    def give_name(self, user_id):
+        name = "You"
+        if not (self.user_from_id == user_id):
+            name = Users.query.get(self.user_from_id).name
+        
+        return name
+
 @login.user_loader
 def load_user(id):
     return Users.query.get(int(id))

@@ -2,4 +2,7 @@
 
 {% block content %}
     <h4> Hi {{current_user.name}}, here are your messages: </h4>
+    {% for message in messages %}
+        <p> <b> {{ message.give_name(current_user.id) }}: </b> {{ message.content }} </p>
+    {% endfor %}
 {% endblock %}

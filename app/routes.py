@@ -84,4 +84,15 @@ def message():
     if not current_user.is_authenticated:
         return redirect(url_for("login"))
     
-    return render_template("room.html")
+    current_user_id = current_user.id
+    '''messages = []
+    for message in Users.query.get(current_user_id).messages:
+        # Get the name of the sender
+        name = "You"
+        if not (message.user_from_id == current_user_id):
+            name = Users.query.get(message.user_from_id).name
+        
+        # Add it to the message list
+        messages.add('{}: {}'.format(name, message.content))'''
+
+    return render_template("room.html", messages=Users.query.get(current_user_id).messages)
