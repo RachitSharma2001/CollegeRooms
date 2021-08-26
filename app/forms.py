@@ -14,3 +14,8 @@ class LoginForm(FlaskForm):
     name = StringField("Name", [DataRequired()])
     password = PasswordField("Password", [DataRequired()])
     login = SubmitField("Login")
+
+class MessageForm(FlaskForm):
+    message = StringField("Enter Message", [DataRequired()])
+    #person_to
+    send = SubmitField("Send")

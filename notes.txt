@@ -4,3 +4,7 @@
 2. How we would access all the messages:
     a. for m in User.query.get(user id).messages:
         print(m.content Users.query.get(m.user_to_id).name, Users.query.get(m.user_from_id).name)
+
+3. Add Programming habit: play with only one parameter/change at a time, keep all else constant at first, then slowly make each constant dynamic 
+    a. When implementing messaging, there aretwo parameters: the sender and receiver 
+    b. First, we hardcoded the receiver, deciding to wait to implement it

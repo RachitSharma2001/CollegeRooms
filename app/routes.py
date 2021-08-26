@@ -1,8 +1,9 @@
 from flask import render_template, redirect, request, flash, url_for
 from flask_login import current_user, login_user, login_required, logout_user
-from app import app, db
-from app.forms import LoginForm, SignupForm
-from app.models import Users
+from flask_sqlalchemy import event
+from app import socketio, app, db
+from app.forms import LoginForm, SignupForm, MessageForm
+from app.models import Users, Message
 from werkzeug.urls import url_parse
 
 @app.route('/')
@@ -78,21 +79,28 @@ def pending_invites():
     
     return "Invites"
 
-@app.route('/message_room')
+@app.route('/message_room', methods=["GET", "POST"])
 @login_required
 def message():
     if not current_user.is_authenticated:
         return redirect(url_for("login"))
     
-    current_user_id = current_user.id
-    '''messages = []
-    for message in Users.query.get(current_user_id).messages:
-        # Get the name of the sender
-        name = "You"
-        if not (message.user_from_id == current_user_id):
-            name = Users.query.get(message.user_from_id).name
+    message_form = MessageForm()
+    #event.listen(Message, "after_insert", render_template("room.html", messages=Users.query.get(current_user.id).messages, form=message_form))
+    
+    if message_form.validate_on_submit():
+        user_from_id = current_user.id
+        # Hard coded for now
+        user_to_id = 2
+        message_content = message_form.data['message']
         
-        # Add it to the message list
-        messages.add('{}: {}'.format(name, message.content))'''
+        new_message = Message(user_from_id=user_from_id, user_to_id=user_to_id, content=message_content)
+        db.session.add(new_message)
+        db.session.commit()
+        
+        socketio.emit(str(user_to_id), {'new_message', new_message})
+        # socket io emit new_message : content 
+        # then in javascript of room, we can add something listens for this new message and loads the new messages
+    
+    return render_template("room.html", messages=Users.query.get(current_user.id).messages, form=message_form)
 
-    return render_template("room.html", messages=Users.query.get(current_user_id).messages)
