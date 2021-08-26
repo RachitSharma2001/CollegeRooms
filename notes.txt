@@ -8,3 +8,26 @@
 3. Add Programming habit: play with only one parameter/change at a time, keep all else constant at first, then slowly make each constant dynamic 
     a. When implementing messaging, there aretwo parameters: the sender and receiver 
     b. First, we hardcoded the receiver, deciding to wait to implement it
+
+4. Current errors:
+    a. jQuery.Deferred exception: io is not defined ReferenceError: io is not defined
+    at HTMLDocument.<anonymous> (http://127.0.0.1:5000/message_room:13:34)
+    at e (https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js:2:30005)
+    at t (https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js:2:30307) undefined
+    b. Uncaught ReferenceError: io is not defined
+    at HTMLDocument.<anonymous> (message_room:13)
+    at e (jquery.min.js:2)
+    at t (jquery.min.js:2)
+
+5. Current error is on line: var socket = io.connect('http://' + document.domain + ':' + location.port)
+    in base.html 
+        a. See if followed tutorial on socket io correctly 
+        b. See if the jquery is loaded correctly (maybe just download jquery js file)
+        c. Search up Uncaught ReferenceError: io is not defined error 
+
+6. If can't see if console log 
+    a. go to chrome://extensions/
+    b. Enable developer tools 
+    c. Also, click on console, then on errors (if want to see errors) or on user messages (if want to see console logs and warnings)
+    d. Visit: https://stackoverflow.com/questions/10257301/accessing-console-and-devtools-of-extensions-background-js
+    e. Maybe ask: how to see console log if can't see it from flask app (the above stack overflow is from chrome extensions)

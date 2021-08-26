@@ -91,14 +91,14 @@ def message():
     if message_form.validate_on_submit():
         user_from_id = current_user.id
         # Hard coded for now
-        user_to_id = 2
+        user_to_id = message_form.data['choices']
         message_content = message_form.data['message']
         
         new_message = Message(user_from_id=user_from_id, user_to_id=user_to_id, content=message_content)
         db.session.add(new_message)
         db.session.commit()
-        
-        socketio.emit(str(user_to_id), {'new_message', new_message})
+
+        #socketio.emit(str(user_to_id), {'new_message', new_message})
         # socket io emit new_message : content 
         # then in javascript of room, we can add something listens for this new message and loads the new messages
     

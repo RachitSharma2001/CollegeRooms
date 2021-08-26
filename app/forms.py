@@ -1,6 +1,7 @@
 from flask_wtf import FlaskForm
-from wtforms.fields import StringField, PasswordField, SubmitField 
-from wtforms.validators import DataRequired 
+from wtforms.fields import StringField, PasswordField, SelectField, SubmitField 
+from wtforms.validators import DataRequired
+from app.models import Users
 
 class SignupForm(FlaskForm):
     name = StringField("Enter name", [DataRequired()])
@@ -16,6 +17,13 @@ class LoginForm(FlaskForm):
     login = SubmitField("Login")
 
 class MessageForm(FlaskForm):
+
+    def returnAllUsers():
+        users = []
+        for user in Users.query.all():
+            users.append((user.id, user.name))
+        return users 
+    
     message = StringField("Enter Message", [DataRequired()])
-    #person_to
+    choices = SelectField("To whom", choices=returnAllUsers())
     send = SubmitField("Send")

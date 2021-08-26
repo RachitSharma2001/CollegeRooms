@@ -7,20 +7,11 @@
 
         <div>
             {{ form.message.label }}
-            {{ form.message(size=200) }}
+            {{ form.message(size=100) }}
+            {{ form.choices() }}
             {{ form.send() }}
         </div>
     </form>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
-        console.log("WE have a script")
-        $(document).ready(function() {
-            var socket = io.connect('http://' + document.domain + ':' + location.port)
-            console.log("This is the current user: ", current_user.id)
-            socket.on(''+current_user.id, function(msg) {
-                $('#log').append('<p> Received new message </p>')
-            });
-        });
-    </script>
     {% for message in messages %}
         <p> <b> {{ message.give_name(current_user.id) }}: </b> {{ message.content }} </p>
     {% endfor %}
