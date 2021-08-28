@@ -79,6 +79,8 @@ def pending_invites():
     
     return "Invites"
 
+
+
 @app.route('/message_room', methods=["GET", "POST"])
 @login_required
 def message():
@@ -102,5 +104,5 @@ def message():
         # socket io emit new_message : content 
         # then in javascript of room, we can add something listens for this new message and loads the new messages
     
-    return render_template("room.html", messages=Users.query.get(current_user.id).messages, form=message_form)
-
+    #return render_template("room.html", messages=Users.query.get(current_user.id).messages, form=message_form)
+    return render_template("room.html", messages=Users.giveMessagesFrom(current_user.id, 3), form=message_form)

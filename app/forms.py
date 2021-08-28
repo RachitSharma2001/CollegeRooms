@@ -1,7 +1,9 @@
 from flask_wtf import FlaskForm
-from wtforms.fields import StringField, PasswordField, SelectField, SubmitField 
+from wtforms.fields import StringField, PasswordField, SelectField, SubmitField
+#from wtforms_sqlalchemy.fields import QuerySelectField
 from wtforms.validators import DataRequired
 from app.models import Users
+from app import app
 
 class SignupForm(FlaskForm):
     name = StringField("Enter name", [DataRequired()])
@@ -16,14 +18,26 @@ class LoginForm(FlaskForm):
     password = PasswordField("Password", [DataRequired()])
     login = SubmitField("Login")
 
+class ChoiceForm(FlaskForm):
+    def returnAllUsers():
+        users = []
+        for user in Users.query.all():
+            users.append((user.id, user.name))
+        return users
+
+    options = SelectField("To whom", choices=returnAllUsers())
+
 class MessageForm(FlaskForm):
 
     def returnAllUsers():
         users = []
         for user in Users.query.all():
             users.append((user.id, user.name))
-        return users 
-    
+        return users
+
     message = StringField("Enter Message", [DataRequired()])
-    choices = SelectField("To whom", choices=returnAllUsers())
+    #choices = SelectField("To whom", choices=returnAllUsers())
+    
+    with app.app_context():
+        choices = ChoiceForm()
     send = SubmitField("Send")

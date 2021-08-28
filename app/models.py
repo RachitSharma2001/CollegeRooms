@@ -2,6 +2,7 @@ from app import db, login
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 from datetime import datetime
+from sqlalchemy import or_
 
 class Users(UserMixin, db.Model):
     NAME_SIZE = 100
@@ -11,6 +12,9 @@ class Users(UserMixin, db.Model):
     hall = db.Column(db.String(100))
     password = db.Column(db.String(100))
     messages = db.relationship('Message', lazy='dynamic', primaryjoin="or_(Users.id == Message.user_to_id, Users.id == Message.user_from_id)")
+
+    def giveMessagesFrom(current_user_id, friend_id):
+        return Users.query.get(current_user_id).messages.filter(or_(Message.user_to_id==friend_id, Message.user_from_id==friend_id))
 
     def set_password(self, password):
         self.password = generate_password_hash(password)
