@@ -1,0 +1,13 @@
+<form action="" method="POST" novalidate>
+    <script>
+        function test_function(){
+            messages = document.getElementsByClassName("message");
+            messages.remove();
+        }
+    </script>
+    {{ form.hidden_tag() }}
+    {{ form.options }}
+    {% for message in messages %}
+        <p class = "message"> <b> {{ message.give_name(current_user.id) }}: </b> {{ message.content }} </p>
+    {% endfor %}
+</form>

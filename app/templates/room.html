@@ -8,18 +8,16 @@
         <div>
             {{ form.message.label }}
             {{ form.message(size=100) }}
-            <form action="" method="POST", novalidate>
+            <!-- <form action="" method="POST", novalidate>
                 {{ form.choices.csrf_token }}   
                 {{ form.choices.options }} 
-            </form>
-            <!-- {{ form.choices }} -->
+            </form> -->
+            {{ form.choices }}
             {{ form.send() }}
         </div>
     </form>
-    <!--
-         {% for message in messages %}
+    {% for message in messages %}
         <p> <b> {{ message.give_name(current_user.id) }}: </b> {{ message.content }} </p>
     {% endfor %}
-    -->
    
 {% endblock %}

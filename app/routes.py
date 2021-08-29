@@ -2,7 +2,7 @@ from flask import render_template, redirect, request, flash, url_for
 from flask_login import current_user, login_user, login_required, logout_user
 from flask_sqlalchemy import event
 from app import socketio, app, db
-from app.forms import LoginForm, SignupForm, MessageForm
+from app.forms import LoginForm, SignupForm, MessageForm, ChoiceForm
 from app.models import Users, Message
 from werkzeug.urls import url_parse
 
@@ -84,7 +84,13 @@ def pending_invites():
 @app.route('/message_room', methods=["GET", "POST"])
 @login_required
 def message():
-    if not current_user.is_authenticated:
+    choices=ChoiceForm()
+
+    if choices.validate_on_submit():
+        print("Change!")
+
+    return render_template("test.html", form=choices, messages=Users.query.get(current_user.id).messages)
+    '''if not current_user.is_authenticated:
         return redirect(url_for("login"))
     
     message_form = MessageForm()
@@ -105,4 +111,4 @@ def message():
         # then in javascript of room, we can add something listens for this new message and loads the new messages
     
     #return render_template("room.html", messages=Users.query.get(current_user.id).messages, form=message_form)
-    return render_template("room.html", messages=Users.giveMessagesFrom(current_user.id, 3), form=message_form)
+    return render_template("room.html", messages=Users.giveMessagesFrom(current_user.id, 3), form=message_form)'''
