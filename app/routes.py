@@ -1,4 +1,4 @@
-from flask import render_template, redirect, request, flash, url_for
+from flask import render_template, redirect, request, flash, jsonify, url_for
 from flask_login import current_user, login_user, login_required, logout_user
 from flask_sqlalchemy import event
 from app import socketio, app, db
@@ -82,15 +82,20 @@ def pending_invites():
 
 
 @app.route('/message_room', methods=["GET", "POST"])
+@app.route('/message_room/<current_friend>', methods=["GET", "POST"])
 @login_required
-def message():
-    choices=ChoiceForm()
+def message(current_friend=None):
+    '''choices=ChoiceForm()
 
     if choices.validate_on_submit():
         print("Change!")
 
-    return render_template("test.html", form=choices, messages=Users.query.get(current_user.id).messages)
-    '''if not current_user.is_authenticated:
+    if current_friend == None:
+        return render_template("test.html", form=choices, messages=Users.query.get(current_user.id).messages)
+    else:
+        print("Here is current friend: ", current_friend)
+        return render_template("test.html", form=choices, messages=Users.giveMessagesFrom(current_user.id, current_friend))'''
+    if not current_user.is_authenticated:
         return redirect(url_for("login"))
     
     message_form = MessageForm()
@@ -111,4 +116,21 @@ def message():
         # then in javascript of room, we can add something listens for this new message and loads the new messages
     
     #return render_template("room.html", messages=Users.query.get(current_user.id).messages, form=message_form)
-    return render_template("room.html", messages=Users.giveMessagesFrom(current_user.id, 3), form=message_form)'''
+    #return render_template("room.html", messages=Users.giveMessagesFrom(current_user.id, 3), form=message_form)
+    if current_friend == None:
+        return render_template("room.html", messages=Users.query.get(current_user.id).messages, form=message_form)
+    else:
+        message_form.resetChoice(current_friend)
+        print("Here is current friend: ", current_friend)
+        return render_template("room.html", messages=Users.giveMessagesFrom(current_user.id, current_friend), form=message_form)
+
+@app.route('/test/<current_friend>', methods=["GET"])
+def give(current_friend):
+    print("Current friend: ", current_friend)
+    #return jsonify({'message' : 'Hello World'})
+    new_messages = Users.giveMessagesFrom(current_user.id, current_friend)
+    for m in new_messages:
+        print("New message: ", m)
+    
+    return redirect(url_for("pending_invites"))
+    #return jsonify("Nothing")

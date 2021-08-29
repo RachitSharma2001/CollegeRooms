@@ -1,8 +1,13 @@
 <form action="" method="POST" novalidate>
     <script>
         function test_function(){
-            messages = document.getElementsByClassName("message");
-            messages.remove();
+            var current_selected_user = document.getElementById("options").value;
+            // Users.giveMessagesFrom()
+            // console.log("Here is messages: " + messages)
+            /*fetch(`/test/${current_selected_user}`).then(function (response) {
+                console.log("Response: ", response.json().message)
+            });*/
+            window.location.replace(`http://127.0.0.1:5000/message_room/${current_selected_user}`)
         }
     </script>
     {{ form.hidden_tag() }}

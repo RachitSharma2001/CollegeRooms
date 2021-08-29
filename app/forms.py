@@ -24,6 +24,7 @@ class ChoiceForm(FlaskForm):
         for user in Users.query.all():
             users.append((user.id, user.name))
         return users
+    
     options = SelectField("To whom", choices=returnAllUsers(), render_kw={"onchange" : "test_function()"})
 
 class MessageForm(FlaskForm):
@@ -35,5 +36,6 @@ class MessageForm(FlaskForm):
         return users
 
     message = StringField("Enter Message", [DataRequired()])
-    choices = SelectField("To whom", choices=returnAllUsers())
+    #choices = SelectField("To whom", choices=returnAllUsers())
+    choices = SelectField("To whom", choices=returnAllUsers(), render_kw={"onchange" : "test_function()"})
     send = SubmitField("Send")
