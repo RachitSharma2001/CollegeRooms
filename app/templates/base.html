@@ -1,37 +1,20 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title> UCDavis Friends Matcher </title>
-    </head>
-    <body>
-        <div>
-            <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
-            </script>
+{% extends "bootstrap/base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
 
-            <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.1.3/socket.io.min.js">
-            </script>
+{% block title %}
+    UCDavis Friends Matcher
+{% endblock %}
 
-            <script type="text/javascript">
-                console.log("Hello")
-                $(document).ready(function() {
-                    var socket = io();
-                    console.log("We have socket!")
-                    socket.on('hi', function(msg) {
-                        console.log("Receieved the message hi: ", msg)
-                        $('#log').append('<p> Received new message </p>')
-                    });
-                });
-            </script>
-            -->
-            {% if current_user.is_authenticated %}
-                <a href="{{url_for('message')}}"> Messages </a>
-                <a href="{{url_for('logout')}}"> Logout </a>
-            {% else %}
-                <a href="{{url_for('signup') }}"> Sign Up </a>
-                <a href="{{url_for('login')}}"> Login </a>
-            {% endif %}
-        </div> 
-        {% block content %} {% endblock %}
-        
-    </body>
-</html>
+{% block content %}
+    <div>
+        {% if current_user.is_authenticated %}
+            <a href="{{url_for('message')}}"> Messages </a>
+            <a href="{{url_for('logout')}}"> Logout </a>
+        {% else %}
+            <a href="{{url_for('signup') }}"> Sign Up </a>
+            <a href="{{url_for('login')}}"> Login </a>
+        {% endif %}
+    </div> 
+    {% block inner_content %} 
+    {% endblock %}
+{% endblock %}

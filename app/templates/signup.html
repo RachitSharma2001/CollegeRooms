@@ -1,8 +1,13 @@
 {% extends "base.html" %}
 
-{% block content %} 
+{% block inner_content %} 
     <form action="" method="POST" novalidate>
-        {{ form.hidden_tag() }}
+        <dl>
+            {{ wtf.quick_form(form) }}
+        </dl>
+
+        <!--
+            {{ form.hidden_tag() }}
         <div> 
             {{ form.name.label }}
             {{ form.name(size=32) }}
@@ -22,5 +27,7 @@
         <div>
             {{ form.signup() }}
         </div>
+        -->
+        
     </form>
 {% endblock %}

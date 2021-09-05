@@ -1,6 +1,10 @@
 {% extends "base.html" %}
 
-{% block content %}
+{% block inner_content %}
+    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="{{url_for('.static', filename='css/navbar-fixed-top.css')}}">
+
     <script>
         function test_function(){
             var current_selected_user = document.getElementById("choices").value;
@@ -11,24 +15,41 @@
             });*/
             window.location.replace(`http://127.0.0.1:5000/message_room/${current_selected_user}`)
         }
+        
     </script>
-    <h4> Hi {{current_user.name}}, here are your messages: </h4>
+
+    <!-- <nav class="navbar navbar-light bg-light sticky-top">
+        <div class="container">
+            {% for message in messages %}
+                <p> <b> {{ message.give_name(current_user.id) }}: </b> {{ message.content }} </p>
+            {% endfor %}
+        </div>
+    </nav>-->
+    <!--<div data-bs-spy="scroll" data-bs-target="#navbar-example2" data-bs-offset="0" class="scrollspy-example" tabindex="0">
+        <h4 id="scrollspyHeading1">First heading</h4>
+        <p>...</p>
+        <h4 id="scrollspyHeading2">Second heading</h4>
+        <p>...</p>
+        <h4 id="scrollspyHeading3">Third heading</h4>
+        <p>...</p>
+        <h4 id="scrollspyHeading4">Fourth heading</h4>
+        <p>...</p>
+        <h4 id="scrollspyHeading5">Fifth heading</h4>
+        <p>...</p>
+      </div>-->
+    {% for message in messages %}
+        <p> <b> {{ message.give_name(current_user.id) }}: </b> {{ message.content }} </p>
+    {% endfor %}
     <form action="" method="POST", novalidate>
-        {{ form.hidden_tag() }}
+        {{ wtf.quick_form(form) }} 
+        <!-- {{ form.hidden_tag() }}
 
         <div>
             {{ form.message.label }}
             {{ form.message(size=100) }}
-            <!-- <form action="" method="POST", novalidate>
-                {{ form.choices.csrf_token }}   
-                {{ form.choices.options }} 
-            </form> -->
             {{ form.choices }}
             {{ form.send() }}
-        </div>
+        </div> -->
     </form>
-    {% for message in messages %}
-        <p> <b> {{ message.give_name(current_user.id) }}: </b> {{ message.content }} </p>
-    {% endfor %}
-   
+    
 {% endblock %}
