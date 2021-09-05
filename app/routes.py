@@ -53,7 +53,6 @@ def signup():
 
     return render_template("signup.html", form=signup)
 
-
 @app.route('/logout')
 @login_required
 def logout():
@@ -63,47 +62,17 @@ def logout():
     logout_user()
     return render_template("logout.html")
 
-@app.route('/suggestions')
-@login_required
-def suggestions():
-    if not current_user.is_authenticated:
-        return redirect(url_for("login"))
-    
-    return "Suggestions"
-
-@app.route('/pending_invites')
-@login_required
-def pending_invites():
-    if not current_user.is_authenticated:
-        return redirect(url_for("login"))
-    
-    return "Invites"
-
-
-
 @app.route('/message_room', methods=["GET", "POST"])
 @app.route('/message_room/<current_friend>', methods=["GET", "POST"])
 @login_required
 def message(current_friend=None):
-    '''choices=ChoiceForm()
-
-    if choices.validate_on_submit():
-        print("Change!")
-
-    if current_friend == None:
-        return render_template("test.html", form=choices, messages=Users.query.get(current_user.id).messages)
-    else:
-        print("Here is current friend: ", current_friend)
-        return render_template("test.html", form=choices, messages=Users.giveMessagesFrom(current_user.id, current_friend))'''
     if not current_user.is_authenticated:
         return redirect(url_for("login"))
     
-    message_form = MessageForm()
-    #event.listen(Message, "after_insert", render_template("room.html", messages=Users.query.get(current_user.id).messages, form=message_form))
+    message_form = MessageForm(choices=current_user.id)
     
     if message_form.validate_on_submit():
         user_from_id = current_user.id
-        # Hard coded for now
         user_to_id = message_form.data['choices']
         message_content = message_form.data['message']
         
@@ -111,26 +80,9 @@ def message(current_friend=None):
         db.session.add(new_message)
         db.session.commit()
 
-        #socketio.emit(str(user_to_id), {'new_message', new_message})
-        # socket io emit new_message : content 
-        # then in javascript of room, we can add something listens for this new message and loads the new messages
-    
-    #return render_template("room.html", messages=Users.query.get(current_user.id).messages, form=message_form)
-    #return render_template("room.html", messages=Users.giveMessagesFrom(current_user.id, 3), form=message_form)
     if current_friend == None:
         return render_template("room.html", messages=Users.query.get(current_user.id).messages, form=message_form)
     else:
-        message_form.resetChoice(current_friend)
-        print("Here is current friend: ", current_friend)
+        message_form = MessageForm(choices=current_friend)
+        #print("Here is current friend: ", current_friend)
         return render_template("room.html", messages=Users.giveMessagesFrom(current_user.id, current_friend), form=message_form)
-
-@app.route('/test/<current_friend>', methods=["GET"])
-def give(current_friend):
-    print("Current friend: ", current_friend)
-    #return jsonify({'message' : 'Hello World'})
-    new_messages = Users.giveMessagesFrom(current_user.id, current_friend)
-    for m in new_messages:
-        print("New message: ", m)
-    
-    return redirect(url_for("pending_invites"))
-    #return jsonify("Nothing")

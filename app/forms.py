@@ -34,7 +34,11 @@ class MessageForm(FlaskForm):
         for user in Users.query.all():
             users.append((user.id, user.name))
         return users
+    
+    '''def __init__(self, current_friend):
+        self.choices = SelectField(Users.query.get(current_friend).name)'''
 
+    
     message = StringField("Enter Message", [DataRequired()])
     #choices = SelectField("To whom", choices=returnAllUsers())
     choices = SelectField("To whom", choices=returnAllUsers(), render_kw={"onchange" : "test_function()"})
