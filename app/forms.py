@@ -42,4 +42,4 @@ class MessageForm(FlaskForm):
     message = StringField("Enter Message", [DataRequired()])
     #choices = SelectField("To whom", choices=returnAllUsers())
     choices = SelectField("To whom", choices=returnAllUsers(), render_kw={"onchange" : "test_function()"})
-    send = SubmitField("Send")
+    send = SubmitField("Send", render_kw={"onchange" : "scroll_down()"})

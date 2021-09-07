@@ -3,53 +3,82 @@
 {% block inner_content %}
     <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="{{url_for('.static', filename='css/navbar-fixed-top.css')}}">
-
     <script>
         function test_function(){
             var current_selected_user = document.getElementById("choices").value;
             // Users.giveMessagesFrom()
-            // console.log("Here is messages: " + messages)
+            //.console.log("Here is messages: " + messages)
             /*fetch(`/test/${current_selected_user}`).then(function (response) {
                 console.log("Response: ", response.json().message)
             });*/
             window.location.replace(`http://127.0.0.1:5000/message_room/${current_selected_user}`)
         }
         
+        
     </script>
+    <div>
+    <style>
+        
+        .vertical-scrollable> .row {
+           position: absolute;
+           top: 50px;
+           bottom: 300px;
+           left: 10px;
+           width: 25%;
+           overflow-y: scroll; 
+         }
+         .col-sm-8 { 
+             color: black; 
+             font-size: 16px; 
+             padding-bottom: 2px; 
+             padding-top: 2px; 
+             bottom: 0.1vh
+         }
+         .user-message-view {
+            position: fixed;
+            bottom: 10vh
+         }
+     </style> 
+    <div id = "scroller" class="container vertical-scrollable">
+        <script>
+            /*console.log("Trying scroller");
+            var scroller = $('#scroller');
+            console.log("What is scroller.prop(scrollHeight): " + scroller.prop("scrollHeight"))
+            
+            var scroller_diff_id = $('#container vertical-scrollable');
+            scroller_diff_id.scrollTop(-15);*/
+                var div = $('#scroller');
+                console.log("Hey I am here, here is div[0].scrollHeight: ", div[0].scrollHeight)
+                div.animate({
+                    scrollTop: 150
+                }, 1000);
+            
 
-    <!-- <nav class="navbar navbar-light bg-light sticky-top">
-        <div class="container">
+            //scroller.scrollTop(scroller.prop("scrollHeight"));
+            //scroller.scrollTop(-15);
+        </script>
+        
+        <div class="row text-left">
             {% for message in messages %}
-                <p> <b> {{ message.give_name(current_user.id) }}: </b> {{ message.content }} </p>
+                <div class = "col-sm-8"> <p> <b> {{ message.give_name(current_user.id) }}: </b> {{ message.content }} </p> </div> 
             {% endfor %}
-        </div>
-    </nav>-->
-    <!--<div data-bs-spy="scroll" data-bs-target="#navbar-example2" data-bs-offset="0" class="scrollspy-example" tabindex="0">
-        <h4 id="scrollspyHeading1">First heading</h4>
-        <p>...</p>
-        <h4 id="scrollspyHeading2">Second heading</h4>
-        <p>...</p>
-        <h4 id="scrollspyHeading3">Third heading</h4>
-        <p>...</p>
-        <h4 id="scrollspyHeading4">Fourth heading</h4>
-        <p>...</p>
-        <h4 id="scrollspyHeading5">Fifth heading</h4>
-        <p>...</p>
-      </div>-->
-    {% for message in messages %}
-        <p> <b> {{ message.give_name(current_user.id) }}: </b> {{ message.content }} </p>
-    {% endfor %}
-    <form action="" method="POST", novalidate>
-        {{ wtf.quick_form(form) }} 
-        <!-- {{ form.hidden_tag() }}
+        </div> 
+    </div>
+    
+    <div class = "user-message-view">
+        <form action="" method="POST", novalidate>
+            {{ wtf.quick_form(form) }} 
+            <!-- {{ form.hidden_tag() }}
 
-        <div>
-            {{ form.message.label }}
-            {{ form.message(size=100) }}
-            {{ form.choices }}
-            {{ form.send() }}
-        </div> -->
-    </form>
+            <div>
+                {{ form.message.label }}
+                {{ form.message(size=100) }}
+                {{ form.choices }}
+                {{ form.send() }}
+            </div> -->
+        </form>
+    </div>
+</div>
+    
     
 {% endblock %}

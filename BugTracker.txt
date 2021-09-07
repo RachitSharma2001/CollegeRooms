@@ -1,0 +1,17 @@
+1. The messages scroll does not scroll to bottom 
+    a. Situation
+        i. So far the I don't know why the scroller doesn't scroll to bottom 
+        ii. I have the code 
+             var div = $('#scroller');
+             console.log("Hey I am here, here is div[0].scrollHeight: ", div[0].scrollHeight)
+             div.animate({
+                scrollTop: 150
+             }, 1000);
+        iii. However, the scroller does not move. Maybe:
+            1. does #scroller not refer to the scroller of id "scroller"?
+            2. Maybe I need to set div to the messages or rows or something rather than the outer div?
+            3. Why is scroll Height 0?
+            4. div.animate does not work 
+    b. Links:
+        https://stackoverflow.com/questions/10503606/scroll-to-bottom-of-div-on-page-load-jquery
+        https://stackoverflow.com/questions/50960978/call-js-function-after-div-is-loaded
