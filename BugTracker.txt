@@ -1,31 +1,3 @@
-1. The messages scroll does not scroll to bottom 
-    a. Situation
-        i. So far the I don't know why the scroller doesn't scroll to bottom 
-        ii. I have the code 
-             var div = $('#scroller');
-             console.log("Hey I am here, here is div[0].scrollHeight: ", div[0].scrollHeight)
-             div.animate({
-                scrollTop: 150
-             }, 1000);
-        iii. However, the scroller does not move. Maybe:
-            1. does #scroller not refer to the scroller of id "scroller"?
-            2. Maybe I need to set div to the messages or rows or something rather than the outer div?
-            3. Why is scroll Height 0?
-            4. div.animate does not work 
-    b. Links:
-        https://stackoverflow.com/questions/10503606/scroll-to-bottom-of-div-on-page-load-jquery
-        https://stackoverflow.com/questions/50960978/call-js-function-after-div-is-loaded
-
-2. Choices don't get updated when a new user signs up 
+1. Choices don't get updated when a new user signs up 
     a. This is because choices has its possible choices initialized only at start(when we do flask run) and so when user is added, we need to update choices somehow 
     or we need to add a listener to see when user updated or something 
-
-3. When there are few messages from one user to another, the new messages added gets spaced out weirdly
-    i. No idea why -> something with the css
-    ii. It gets spaced by half when there are two messages, then by 1/4 when 3, etc until it get capped and the scroll bar appears. Then it just stays at that spaced-out value
-
-4. Messages div is fixed height and isn't large enough 
-    a. In wtforms, how do you pass in args to quickform?
-    b. If can't, just then do longer way showed by the guy in the tutorial (PrettyPrinted)
-
-5. In signup and login stringfields are too long

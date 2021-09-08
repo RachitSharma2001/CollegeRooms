@@ -1,0 +1,36 @@
+1. Skip bugs for later once you are too tired 
+    a. How to know you are too tired: you just want quick solutions, and any suggestions that would take some work but would ulitmetly work annoy you. You avoid those.
+    b. At this point, take a break, and then come back and implement some easier features. 
+    c. Then, at a different point, you should come back when you have a clearer head.
+    d. With a clearer head you will be able to tackle the bug head on, with a willingness to take some time into figuring out what is happening. 
+
+2. For debugging
+    a. If there is a bug in some feature you are implementing, then don't just try to pull a hail mary and just search up "How to make [feature]" and just go through all the 
+    different stack over flows hoping that some magical answer will give you all you need. 
+    b. That never works, at least from current expierence I have had with this project. 
+    c. Instead, try to understand the bug. What are the different libraries and languages involved in your bug? What are the different lines of code where the bug occurs?
+    Test each line of code, test if its giving what you are thinking. 
+        What is the logic that the code is trying to implement? Obviously the logic is working completely, so which line of code messed up, or maybe the code doesn't actually 
+        do what you thought it would do.
+    d. One of the biggest bugs I was dealing with was trying to get the scroller div to scroll down whenever I entered a new message
+    e. The code involved some css with the line "#vertical-scrollable> .row .....", some html "<div id="vertical-scrollable" ... " 
+        and some js "scroll height = $("#vertical-scrollable").scrollHeight ... $("#vertical-scrollable).scrollTop = ...".
+    f. The path to fixing this bug involved me trying to understand what $("#vertical-scrollable") meant. 
+    h. For the longest time I thought it refered to the div element only. When I tried to understand how the js code logically would be able to scroll that div, I realized it 
+    needed access to the css which defined that it had a scroller. But the css had the name "#vertical-scrollable> .row" instead of "#vertical-scrollable". Fixing this led
+    to scroll working. 
+    i. So its all about understanding whats supposed to be the logic of the buggy code, and really understanding why it should work. Then you will realize some lines of code 
+    depend on something, and realize that you need to specify, delete, or whatever something in order to make that happen. Thats one way to fix tough bugs. 
+
+3. Seperate project into several tasks and try to implement each task. Once you finish a task, even if not perfect, move on 
+    a. Especially for UI related tasks, it becomes easy to try to continue working on the task in order to perfect it rather than going to other more urgent things to implement 
+    b. For these kinds of tasks, just move on. Its a waste of time to perfect something that already is 70-80% good, if you have other things needed to implement in order to 
+    complete the project 
+
+4. For projects, just try to get an MVP, even if clunky. Just focus on completeness.
+    a. For this site, I just focused on completeness. I just wanted to get to a social media type website that, while very clunky and a little buggy, still is a complete website 
+    b. And this site now is -> one can signup, log in, and make some messages to one or all of the users. 
+    c. It looks somewhat like a website, even if very ugly. 
+    d. And of course no one would use this in real life -> that wasn't the point of this. The point was to practice some backend skills and make something complete that I could 
+    be proud of.
+    e. And i think thats what projects are about. 
