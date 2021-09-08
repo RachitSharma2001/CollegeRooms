@@ -11,7 +11,7 @@
     </script>
     <div>
     <style>
-        .vertical-scrollable> .row {
+        #vertical-scrollable{
            position: absolute;
            top: 10%;
            bottom: 300px;
@@ -33,15 +33,36 @@
             bottom: 13vh
          }
      </style> 
-    <div id = "scroller" class="container vertical-scrollable">
+    <!--<div id = "scroller" class="container vertical-scrollable">
+        <div class="row text-left">
+            {% for message in messages %}
+                <div class = "col-sm-8"> <p> <b> {{ message.give_name(current_user.id) }}: </b> {{ message.content }} </p> </div> 
+            {% endfor %}
+        </div> 
+    </div>-->
+    <div id ="vertical-scrollable">
         <div class="row text-left">
             {% for message in messages %}
                 <div class = "col-sm-8"> <p> <b> {{ message.give_name(current_user.id) }}: </b> {{ message.content }} </p> </div> 
             {% endfor %}
         </div> 
     </div>
-    <!--<button id = "target" type="button">Click Me!</button>-->
+
     <script>
+        const scroller = document.querySelector("#vertical-scrollable");
+        console.log("Scroller: ", scroller)
+        /*$( "#target" ).click(function() {
+            scroller.scrollTop = 2951;
+            console.log("scrollTop: ", scroller.scrollTop);
+            $('#scroller').scroll();
+        });*/
+
+        window.onload = (event) => {
+            console.log("Scroll height: ", scroller.scrollHeight)
+            scroller.scrollTop = scroller.scrollHeight;
+        };
+    </script>
+    <!--<script>
         /*console.log("Trying scroller");
         var scroller = $('#scroller');
         console.log("What is scroller.prop(scrollHeight): " + scroller.prop("scrollHeight"))
@@ -55,18 +76,19 @@
             /*div.animate({
                 scrollTop: 150
             }, 1000);*/
-        
+            
             $( "#target" ).click(function() {
                 var div = $('#scroller');
                 div.animate({
                     scrollTop: 150
                 }, 'slow');
                 //$('#scroller').scroll();
+                console.log("Amount scrolled: ", $('#scroller').scrollTop)
                 console.log("Click");
             });
         //scroller.scrollTop(scroller.prop("scrollHeight"));
         //scroller.scrollTop(-15);
-    </script>
+    </script>-->
     
     <div class = "user-message-view">
         <form action="" method="POST", novalidate>
