@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block content %}
-    <div>
+    <!--<div>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             {% if current_user.is_authenticated %}
                 <a class="nav-item nav-link active" href="{{url_for('message')}}"> Messages </a>
@@ -17,7 +17,18 @@
             {% endif %}
         </nav>
         
-    </div> 
+    </div>-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    
+    <nav class="navbar navbar-dark bg-dark">
+        {% if current_user.is_authenticated %}
+            <a class="navbar-brand" href="{{url_for('message')}}"> Messages </a>
+            <a class="navbar-brand" href="{{url_for('logout')}}"> Logout </a>
+        {% else %}
+            <a class="navbar-brand" href="{{url_for('signup') }}"> Sign Up </a>
+            <a class="navbar-brand" href="{{url_for('login')}}"> Login </a>
+        {% endif %}
+    </nav>
     {% block inner_content %} 
     {% endblock %}
 {% endblock %}

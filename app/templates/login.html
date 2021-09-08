@@ -2,20 +2,49 @@
 
 {% block inner_content %}
     <!-- Reminder: percentage is used for expressions of logic, while brace is used for substituting in variables -->
-    <form action="" method="POST"  novalidate>
-        <dl>
-            {{ wtf.quick_form(form) }}
-        </dl> 
-        <!-- {{ form.hidden_tag() }}
-        <div> 
-            {{ form.name.label }}
-            {{ form.name(size=32) }}
-        </div>
-        <div> 
-            {{ form.password.label }}
-            {{ form.password(size=32) }}
-        </div>
-        <div> {{ form.login() }} </div> -->
-    </form>
+    <style>
+        .login-form-view {
+            margin: auto;
+            left: 1%;
+            width: 50%;
+            font-size: 20pt;
+            color: black;
+         }
+         .button-view {
+            margin: auto;
+            color: blue
+         }
+    </style>
+
+    
+    <div class = "login-form-view">
+        <form action="" method="POST"  novalidate>
+            {{ form.hidden_tag() }}
+            {{ wtf.form_field(form.name) }}
+            {{ wtf.form_field(form.password) }}
+            
+            <div class = "button-view">
+                {{ wtf.form_field(form.login) }}
+            </div>
+        </form>
+    </div>
+    <!--
+    <div class = "login-form-view">
+        <form action="" method="POST"  novalidate>
+            <dl>{{ wtf.quick_form(form) }}</dl>
+            
+             {{ form.hidden_tag() }}
+            <div> 
+                {{ form.name.label }}
+                {{ form.name(size=32) }}
+            </div>
+            <div> 
+                {{ form.password.label }}
+                {{ form.password(size=32) }}
+            </div>
+            <div> {{ form.login() }} </div> 
+        </form>
+    </div>-->
+    
 {% endblock %}
 

@@ -11,13 +11,12 @@
     </script>
     <div>
     <style>
-        
         .vertical-scrollable> .row {
            position: absolute;
-           top: 50px;
+           top: 10%;
            bottom: 300px;
-           left: 10px;
-           width: 25%;
+           left: 1%;
+           width: 35%;
            overflow-y: scroll; 
          }
          .col-sm-8 { 
@@ -29,41 +28,52 @@
          }
          .user-message-view {
             position: fixed;
-            bottom: 10vh
+            left: 1%;
+            width: 35%;
+            bottom: 13vh
          }
      </style> 
     <div id = "scroller" class="container vertical-scrollable">
-        <script>
-            /*console.log("Trying scroller");
-            var scroller = $('#scroller');
-            console.log("What is scroller.prop(scrollHeight): " + scroller.prop("scrollHeight"))
-            
-            var scroller_diff_id = $('#container vertical-scrollable');
-            scroller_diff_id.scrollTop(-15);*/
-                var div = $('#scroller');
-                console.log("Hey I am here, here is div[0].scrollHeight: ", div[0].scrollHeight)
-                div.animate({
-                    scrollTop: 150
-                }, 1000);
-            
-
-            //scroller.scrollTop(scroller.prop("scrollHeight"));
-            //scroller.scrollTop(-15);
-        </script>
-        
         <div class="row text-left">
             {% for message in messages %}
                 <div class = "col-sm-8"> <p> <b> {{ message.give_name(current_user.id) }}: </b> {{ message.content }} </p> </div> 
             {% endfor %}
         </div> 
     </div>
+    <!--<button id = "target" type="button">Click Me!</button>-->
+    <script>
+        /*console.log("Trying scroller");
+        var scroller = $('#scroller');
+        console.log("What is scroller.prop(scrollHeight): " + scroller.prop("scrollHeight"))
+        
+        var scroller_diff_id = $('#container vertical-scrollable');
+        scroller_diff_id.scrollTop(-15);*/
+            var div = $('#scroller');
+            console.log("By document getElementById: ", document.getElementById("scroller"), " , ", document.getElementById("scroller").scrollHeight)
+            console.log("Hey I am here, here is div[0]", div[0])
+            $('#scroller').scroll();
+            /*div.animate({
+                scrollTop: 150
+            }, 1000);*/
+        
+            $( "#target" ).click(function() {
+                var div = $('#scroller');
+                div.animate({
+                    scrollTop: 150
+                }, 'slow');
+                //$('#scroller').scroll();
+                console.log("Click");
+            });
+        //scroller.scrollTop(scroller.prop("scrollHeight"));
+        //scroller.scrollTop(-15);
+    </script>
     
     <div class = "user-message-view">
         <form action="" method="POST", novalidate>
-            {{ wtf.quick_form(form) }} 
-            <!-- {{ form.hidden_tag() }}
-
-            <div>
+            {{ wtf.quick_form(form) }}
+            
+           
+            <!--<div>
                 {{ form.message.label }}
                 {{ form.message(size=100) }}
                 {{ form.choices }}
