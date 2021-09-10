@@ -5,28 +5,21 @@ from wtforms.validators import DataRequired
 from app.models import Users
 from app import app
 
+# Sign up form
 class SignupForm(FlaskForm):
     name = StringField("Enter name", [DataRequired()])
     major = StringField("Enter major", [DataRequired()])
-    # Make this a dropdown of all halls
     hall = StringField("Enter hall", [DataRequired()])
     password = PasswordField("Password", [DataRequired()])
     signup = SubmitField("Sign up!")
 
+# Log in form
 class LoginForm(FlaskForm):
     name = StringField("Name", [DataRequired()])
     password = PasswordField("Password", [DataRequired()])
     login = SubmitField("Login")
 
-class ChoiceForm(FlaskForm):
-    def returnAllUsers():
-        users = []
-        for user in Users.query.all():
-            users.append((user.id, user.name))
-        return users
-    
-    options = SelectField("To whom", choices=returnAllUsers(), render_kw={"onchange" : "test_function()"})
-
+# Form allowing user to send messages
 class MessageForm(FlaskForm):
 
     def returnAllUsers():
@@ -35,11 +28,7 @@ class MessageForm(FlaskForm):
             users.append((user.id, user.name))
         return users
     
-    '''def __init__(self, current_friend):
-        self.choices = SelectField(Users.query.get(current_friend).name)'''
-
-    
     message = StringField("Enter Message", [DataRequired()])
-    #choices = SelectField("To whom", choices=returnAllUsers())
+    # Field to select specific user to message; when its changed it calls javascript function in room.html
     choices = SelectField("To whom", choices=returnAllUsers(), render_kw={"onchange" : "test_function()"})
     send = SubmitField("Send", render_kw={"onchange" : "scroll_down()"})

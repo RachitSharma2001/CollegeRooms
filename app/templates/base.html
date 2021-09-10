@@ -6,20 +6,10 @@
 {% endblock %}
 
 {% block content %}
-    <!--<div>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            {% if current_user.is_authenticated %}
-                <a class="nav-item nav-link active" href="{{url_for('message')}}"> Messages </a>
-                <a class="nav-item nav-link active" href="{{url_for('logout')}}"> Logout </a>
-            {% else %}
-                <a href="{{url_for('signup') }}"> Sign Up </a>
-                <a href="{{url_for('login')}}"> Login </a>
-            {% endif %}
-        </nav>
-        
-    </div>-->
+    <!-- CSS for bootstrap -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     
+    <!-- Navigation bar all pages share -->
     <nav class="navbar navbar-dark bg-dark">
         {% if current_user.is_authenticated %}
             <a class="navbar-brand" href="{{url_for('message')}}"> Messages </a>

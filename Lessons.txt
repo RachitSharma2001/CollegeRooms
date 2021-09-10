@@ -34,3 +34,15 @@
     d. And of course no one would use this in real life -> that wasn't the point of this. The point was to practice some backend skills and make something complete that I could 
     be proud of.
     e. And i think thats what projects are about. 
+
+5. When writing the code for projects, even if tinkering, you should focus on writing good, neat code 
+    a. Whenever finished implementing something, make sure code is neat and optimized. 
+        i. There should be no long comment areas, unneeded functions/procedures or variables, or poorly written code 
+        ii. This makes code buggy and hard to read for your future self 
+    b. When tinkering (meaning trying to implement a feature using different methods; essentially expierementing) don't make excuse that you "can't focus on neatness right now"
+        i. Don't be too stingy about neatness, but don't just let yourself write messy, unreadable, poorly written code 
+        ii. It will prevent you down the line if an area of code is causing a bug to find the bug quicker
+
+6. When implementing a new feature 
+    a. Each time you implement a new feature make sure to actually test everything that the new code could affect in the program -> you don't want any surprise bugs 
+    b. And so when bugs do occur you know its likely from current feature you tried to implement

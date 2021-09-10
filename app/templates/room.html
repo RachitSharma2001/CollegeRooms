@@ -1,109 +1,69 @@
 {% extends "base.html" %}
 
 {% block inner_content %}
+    <!-- Scrape the javascript for jquery and bootstrap -->
     <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+    <!-- Event listener for when choices selectfield gets updated -->
     <script>
         function test_function(){
             var current_selected_user = document.getElementById("choices").value;
             window.location.replace(`http://127.0.0.1:5000/message_room/${current_selected_user}`)
         }
     </script>
+
     <div>
-    <style>
-        #vertical-scrollable{
-           position: absolute;
-           top: 10%;
-           bottom: 300px;
-           left: 1%;
-           width: 35%;
-           overflow-y: scroll; 
-         }
-         .col-sm-8 { 
-             color: black; 
-             font-size: 16px; 
-             padding-bottom: 2px; 
-             padding-top: 2px; 
-             bottom: 0.1vh
-         }
-         .user-message-view {
-            position: fixed;
+        <!-- CSS for the message view -->
+        <style>
+            #vertical-scrollable{
+            position: absolute;
+            top: 10%;
+            bottom: 300px;
             left: 1%;
             width: 35%;
-            bottom: 13vh
-         }
-     </style> 
-    <!--<div id = "scroller" class="container vertical-scrollable">
-        <div class="row text-left">
-            {% for message in messages %}
-                <div class = "col-sm-8"> <p> <b> {{ message.give_name(current_user.id) }}: </b> {{ message.content }} </p> </div> 
-            {% endfor %}
-        </div> 
-    </div>-->
-    <div id ="vertical-scrollable">
-        <div class="row text-left">
-            {% for message in messages %}
-                <div class = "col-sm-8"> <p> <b> {{ message.give_name(current_user.id) }}: </b> {{ message.content }} </p> </div> 
-            {% endfor %}
-        </div> 
-    </div>
+            overflow-y: scroll; 
+            }
+            .col-sm-8 { 
+                color: black; 
+                font-size: 16px; 
+                padding-bottom: 2px; 
+                padding-top: 2px; 
+                bottom: 0.1vh
+            }
+            .user-message-view {
+                position: fixed;
+                left: 1%;
+                width: 35%;
+                bottom: 13vh
+            }
+        </style> 
 
-    <script>
-        const scroller = document.querySelector("#vertical-scrollable");
-        console.log("Scroller: ", scroller)
-        /*$( "#target" ).click(function() {
-            scroller.scrollTop = 2951;
-            console.log("scrollTop: ", scroller.scrollTop);
-            $('#scroller').scroll();
-        });*/
+        <!-- Render messages, with message view CSS -->
+        <div id ="vertical-scrollable">
+            <div class="row text-left">
+                {% for message in messages %}
+                    <div class = "col-sm-8"> <p> <b> {{ message.give_name(current_user.id) }}: </b> {{ message.content }} </p> </div> 
+                {% endfor %}
+            </div> 
+        </div>
 
-        window.onload = (event) => {
-            console.log("Scroll height: ", scroller.scrollHeight)
-            scroller.scrollTop = scroller.scrollHeight;
-        };
-    </script>
-    <!--<script>
-        /*console.log("Trying scroller");
-        var scroller = $('#scroller');
-        console.log("What is scroller.prop(scrollHeight): " + scroller.prop("scrollHeight"))
+        <!-- When window reloads, scroll down on message view -->
+        <script>
+            const scroller = document.querySelector("#vertical-scrollable");
+            window.onload = (event) => {
+                console.log("Scroll height: ", scroller.scrollHeight)
+                scroller.scrollTop = scroller.scrollHeight;
+            };
+        </script>
         
-        var scroller_diff_id = $('#container vertical-scrollable');
-        scroller_diff_id.scrollTop(-15);*/
-            var div = $('#scroller');
-            console.log("By document getElementById: ", document.getElementById("scroller"), " , ", document.getElementById("scroller").scrollHeight)
-            console.log("Hey I am here, here is div[0]", div[0])
-            $('#scroller').scroll();
-            /*div.animate({
-                scrollTop: 150
-            }, 1000);*/
-            
-            $( "#target" ).click(function() {
-                var div = $('#scroller');
-                div.animate({
-                    scrollTop: 150
-                }, 'slow');
-                //$('#scroller').scroll();
-                console.log("Amount scrolled: ", $('#scroller').scrollTop)
-                console.log("Click");
-            });
-        //scroller.scrollTop(scroller.prop("scrollHeight"));
-        //scroller.scrollTop(-15);
-    </script>-->
-    
-    <div class = "user-message-view">
-        <form action="" method="POST", novalidate>
-            {{ wtf.quick_form(form) }}
-            
-           
-            <!--<div>
-                {{ form.message.label }}
-                {{ form.message(size=100) }}
-                {{ form.choices }}
-                {{ form.send() }}
-            </div> -->
-        </form>
+        <!-- Render form allowing user to send messages -->
+        <div class = "user-message-view">
+            <form action="" method="POST", novalidate>
+                {{ wtf.quick_form(form) }}
+            </form>
+        </div>
     </div>
-</div>
     
     
 {% endblock %}

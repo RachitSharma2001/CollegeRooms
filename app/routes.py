@@ -1,9 +1,9 @@
+from app import app, db
+from app.forms import LoginForm, SignupForm, MessageForm
+from app.models import Users, Message
 from flask import render_template, redirect, request, flash, jsonify, url_for
 from flask_login import current_user, login_user, login_required, logout_user
 from flask_sqlalchemy import event
-from app import socketio, app, db
-from app.forms import LoginForm, SignupForm, MessageForm, ChoiceForm
-from app.models import Users, Message
 from werkzeug.urls import url_parse
 
 @app.route('/')
@@ -37,7 +37,6 @@ def signup():
     
     signup = SignupForm()
     if signup.validate_on_submit():
-        # Get specific data
         name = signup.data['name']
         major = signup.data['major']
         hall = signup.data['hall']
@@ -58,10 +57,11 @@ def signup():
 def logout():
     if not current_user.is_authenticated:
         return redirect(url_for("login"))
-    # Add something to only show if user logs in
+
     logout_user()
     return render_template("logout.html")
 
+# URL routed to when user logs in and when user changes who to message
 @app.route('/message_room', methods=["GET", "POST"])
 @app.route('/message_room/<current_friend>', methods=["GET", "POST"])
 @login_required
@@ -71,6 +71,7 @@ def message(current_friend=None):
     
     message_form = MessageForm(choices=current_user.id)
     
+    # If user sends message to another user, add to database
     if message_form.validate_on_submit():
         user_from_id = current_user.id
         user_to_id = message_form.data['choices']
@@ -81,8 +82,9 @@ def message(current_friend=None):
         db.session.commit()
 
     if current_friend == None:
+        # Show all messages if specific DM not selected
         return render_template("room.html", messages=Users.query.get(current_user.id).messages, form=message_form)
     else:
+        # If specific user to DM is selected, rerender messages to show only that messages to/from that user
         message_form = MessageForm(choices=current_friend)
-        #print("Here is current friend: ", current_friend)
         return render_template("room.html", messages=Users.giveMessagesFrom(current_user.id, current_friend), form=message_form)
